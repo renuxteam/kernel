@@ -1,8 +1,8 @@
-use crate::wrappers::vga::{clear_screen, print_text, initalize_driver};
+use crate::wrappers::vga::{clear_screen, print_text};
 
 pub fn start()
 {
-  initalize_driver(); // Initialize the VGA driver
+  clear_screen();
   print_text("Welcome to Renux OS"); // Write a debug message
 
   // write another debug mensage
