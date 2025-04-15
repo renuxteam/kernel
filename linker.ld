@@ -1,25 +1,39 @@
-SECTIONS
-{
-  . = 0x00100000; /* Endereço inicial do kernel */
-  .multiboot :
+ENTRY(_start)
+
+SECTIONS {
+  . = 1M; 
+
+  
+  .multiboot ALIGN(4) :
   {
     KEEP(*(.multiboot))
   }
-  .text :
+
+  /* Código */
+  .text ALIGN(4) :
   {
-    *(.text)
+    *(.text*)
   }
-  .rodata :
+
+  .rodata ALIGN(4) :
   {
-    *(.rodata)
+    *(.rodata*)
   }
-  .data :
+
+  .data ALIGN(4) :
   {
-    *(.data)
+    *(.data*)
   }
-  .bss :
+
+  .bss ALIGN(4) :
   {
+    *(.bss*)
     *(COMMON)
-    *(.bss)
+  }
+
+  /DISCARD/ :
+  {
+    *(.eh_frame)
+    *(.comment)
   }
 }
