@@ -10,7 +10,6 @@ fn main() -> std::io::Result<()> {
     println!("Building drivers");
     println!("Compiling drivers");
     build_drivers()?;
-    println!("cargo:rustc-link-arg=-T./linker.ld");
     Ok(())
 }
 // Collect C/C++ files
@@ -34,6 +33,7 @@ fn build_drivers() -> std::io::Result<()> {
     let drivers_path = Path::new("../drivers");
     let entries = fs::read_dir(drivers_path).expect("Failed to read drivers directory");
 
+    let optimize_for_size = true;
     // Ensure the driver_path exists
     if !drivers_path.exists() {
         // Print Error
@@ -61,7 +61,14 @@ fn build_drivers() -> std::io::Result<()> {
         .include(drivers_path)
         .warnings(true)
         .debug(true)
+        .flag("-fno-inline")
         .compile("libvga.a");
 
+    // Set optimization level
+    if optimize_for_size {
+        build.flag("-Os");
+    } else {
+        build.flag("-O3");
+    }
     Ok(())
 }

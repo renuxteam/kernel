@@ -1,8 +1,19 @@
-use crate::console::boot_anim;
-use crate::utils::delay::delay;
-use crate::wrappers::vga::put_char_at;
-use crate::wrappers::vga::{clear_screen, print_text};
+use crate::{
+    drivers::video::framebuffer::{self, FramebufferInfo},
+    utils::delay,
+};
 
-pub fn start() {
-    boot_anim::loading_animation();
+pub fn init_start() {
+    let fb_info = FramebufferInfo {
+        address: 0xF0000000, // Replace with actual framebuffer address
+        width: 800,
+        height: 600,
+        pitch: 320,
+        bpp: 32,
+    };
+
+    let fb = framebuffer::Framebuffer::new(fb_info);
+
+    fb.clear([0, 0, 0, 255]); // Clear the screen to black
+    fb.put_pixel(10, 10, [255, 0, 0, 255]); // Draw a red pixel at (100, 100)
 }

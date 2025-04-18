@@ -22,7 +22,7 @@ pub fn loading_animation() {
     let spinner_x = msg.len() + 2;
     let spinner_y = 0;
 
-    for (i) in 0..32 {
+    for i in 0..32 {
         let frame = SPINNER[i % SPINNER.len()];
         put_char_at(spinner_x, spinner_y, frame, 0x0E);
         delay(1000);

@@ -1,5 +1,3 @@
-use core::ptr::write_volatile;
-
 const VGA_WIDTH: usize = 80;
 const VGA_HEIGHT: usize = 25;
 const VGA_BUFFER: *mut u8 = 0xb8000 as *mut u8;
